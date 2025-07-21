@@ -6,7 +6,7 @@ export default function BackButton({ to = "/" }) {
   return (
     <button
       onClick={() => navigate(to)}
-      className="bg-blue-200 hover:bg-blue-300 px-4 py-2 rounded mt-4 font-semibold"
+      className="w-32 bg-blue-200 hover:bg-blue-300 px-4 py-2 rounded mt-4 font-semibold cursor-pointer"
     >
       ← Go Back
     </button>

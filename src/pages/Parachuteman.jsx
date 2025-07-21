@@ -12,10 +12,27 @@ export default function Parachuteman() {
   const [wrongGuesses, setWrongGuesses] = useState([]);
   const [gameStatus, setGameStatus] = useState("playing");
   const [showModal, setShowModal] = useState(false);
-  const [allWords, setAllWords] = useState([]);
-  const [selectedWords, setSelectedWords] = useState(defaultWords);
 
-  // const wordsList = selectedWords.length > 0 ? selectedWords : defaultWords;
+  const [allWords, setAllWords] = useState(() => {
+    const saved = localStorage.getItem("allWords");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [selectedWords, setSelectedWords] = useState(() => {
+    const saved = localStorage.getItem("selectedWords");
+    return saved ? JSON.parse(saved) : defaultWords;
+  });
+
+  const [isRevealing, setIsRevealing] = useState(false);
+
+  // Save to localStorage whenever words change
+  useEffect(() => {
+    localStorage.setItem("allWords", JSON.stringify(allWords));
+  }, [allWords]);
+
+  useEffect(() => {
+    localStorage.setItem("selectedWords", JSON.stringify(selectedWords));
+  }, [selectedWords]);
 
   const resetGame = () => {
     if (selectedWords.length === 0) {
@@ -30,6 +47,7 @@ export default function Parachuteman() {
     setGuessed([]);
     setWrongGuesses([]);
     setGameStatus("playing");
+    setIsRevealing(false);
   };
 
   useEffect(() => {
@@ -59,7 +77,9 @@ export default function Parachuteman() {
 
   const displayWord = word
     .split("")
-    .map((l) => (guessed.includes(l) || gameStatus !== "playing" ? l : "_"))
+    .map((l) =>
+      guessed.includes(l) || gameStatus !== "playing" || isRevealing ? l : "_"
+    )
     .join(" ");
 
   return (
@@ -72,8 +92,13 @@ export default function Parachuteman() {
       </p>
 
       <button
-        className="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded mb-4"
-        onClick={() => setShowModal(true)}
+        className="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded mb-4 cursor-pointer"
+        onClick={() => {
+          if (allWords.length === 0) {
+            setAllWords(selectedWords); // initialize on first open
+          }
+          setShowModal(true);
+        }}
       >
         Words Collection
       </button>
@@ -86,7 +111,7 @@ export default function Parachuteman() {
         {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => (
           <button
             key={letter}
-            className={`w-10 h-10 rounded font-bold text-white ${
+            className={`w-10 h-10 rounded font-bold text-white cursor-pointer ${
               guessed.includes(letter) || wrongGuesses.includes(letter)
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-blue-600 hover:bg-blue-700"
@@ -131,8 +156,17 @@ export default function Parachuteman() {
           </p>
         </div>
       )}
+
       <button
-        className="m-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+        className={`w-22 m-4 px-4 py-2 rounded font-bold text-white ${
+          isRevealing ? "bg-yellow-700" : "bg-yellow-500 hover:bg-yellow-600"
+        }`}
+        onClick={() => setIsRevealing((prev) => !prev)}
+      >
+        {isRevealing ? "Hide" : "Reveal"}
+      </button>
+      <button
+        className="w-28 m-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-5 rounded cursor-pointer"
         onClick={resetGame}
       >
         Reset
@@ -148,7 +182,7 @@ export default function Parachuteman() {
           setAllWords={setAllWords}
           setSelectedWords={(selected) => {
             setSelectedWords(selected);
-            setTimeout(resetGame, 0); // trigger new game after words update
+            setTimeout(resetGame, 0);
           }}
         />
       )}
