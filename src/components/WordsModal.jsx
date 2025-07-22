@@ -135,7 +135,11 @@ export default function WordsModal({
 
           <div className="flex flex-col items-start gap-2">
             <p className="text-sm text-gray-500">
-              Press <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to apply
+              Press{" "}
+              <strong>
+                <kbd>Ctrl</kbd> + <kbd>Enter</kbd>
+              </strong>
+              <br /> to apply
             </p>
             <button
               onClick={handleApply}
