@@ -1,6 +1,10 @@
-export default function GameCard({ title }) {
+export default function GameCard({ title, isBold = false }) {
   return (
-    <div className="bg-blue-200 hover:bg-blue-300 transition p-4 rounded-md text-center font-semibold cursor-pointer">
+    <div
+      className={`bg-blue-200 hover:bg-blue-300 transition p-5 rounded-md text-center cursor-pointer ${
+        isBold ? "font-bold" : "font-semibold"
+      }`}
+    >
       {title}
     </div>
   );

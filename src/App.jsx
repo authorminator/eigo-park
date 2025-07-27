@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Grade3 from "./pages/Grade3";
 import Grade4 from "./pages/Grade4";
 import Parachuteman from "./pages/Parachuteman";
+import ComingSoon from "./pages/ComingSoon";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <Route path="/grade3" element={<Grade3 />} />
       <Route path="/grade4" element={<Grade4 />} />
       <Route path="/parachuteman" element={<Parachuteman />} />
+      <Route path="/coming-soon" element={<ComingSoon />} />
       {/* Add more routes as needed */}
     </Routes>
   );
