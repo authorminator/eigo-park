@@ -3,7 +3,7 @@ export default [
   { name: "Tic Tac Toe" },
   { name: "Keyword Game" },
   { name: "Matching Game" },
-  { name: "Quiz Time" },
+  { name: "Dice 🛠️", path: "/dice" },
   { name: "Memory Flip" },
   { name: "Spelling Bee" },
   { name: "Guess the Word" },
