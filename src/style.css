@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+.tictactoe-font,
+.tictactoe-font * {
+  font-family: "Shantell Sans", cursive;
+}
+
+.tictactoe-font-alt,
+.tictactoe-font-alt * {
+  font-family: "Google Sans Code", monospace;
+}

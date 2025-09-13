@@ -1,6 +1,6 @@
 export default [
   { name: "Parachuteman✔️", path: "/parachuteman" },
-  { name: "Tic Tac Toe" },
+  { name: "Tic Tac Toe 🥅", path: "/tictactoe" },
   { name: "Keyword Game" },
   { name: "Matching Game" },
   { name: "Dice 🛠️", path: "/dice" },
