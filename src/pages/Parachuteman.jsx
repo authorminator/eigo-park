@@ -1,5 +1,6 @@
 import BackButton from "../components/BackButton";
 import WordsModal from "../components/WordsModal";
+import Switch from "../components/Switch";
 import { useState, useEffect } from "react";
 
 const MAX_WRONG = 6;
@@ -133,7 +134,7 @@ export default function Parachuteman() {
                 ? "bg-gray-400 cursor-not-allowed"
                 : isRevealing
                 ? "bg-cyan-800"
-                : "bg-blue-600 hover:bg-blue-700"
+                : "bg-blue-600 hover:bg-blue-700 active:translate-y-1 transition-transform duration-150"
             }`}
             onClick={() => (!isRevealing ? handleGuess(letter) : null)}
             disabled={guessed.includes(letter) || wrongGuesses.includes(letter)}
@@ -176,10 +177,10 @@ export default function Parachuteman() {
         </div>
       )}
 
-      <button
+      {/* <button
         className={`w-22 m-4 px-4 py-2 rounded font-bold text-white cursor-pointer ${
           gameStatus !== "playing"
-            ? "bg-gray-400 cursor-not-allowed"
+            ? "bg-gray-400 cursor-default pointer-events-none"
             : isRevealing
             ? "bg-yellow-700 hover:bg-yellow-800"
             : "bg-yellow-500 hover:bg-yellow-600"
@@ -189,17 +190,33 @@ export default function Parachuteman() {
         }
       >
         {isRevealing ? "Hide" : "Reveal"}
-      </button>
-      <button
-        className="w-28 m-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-5 rounded cursor-pointer"
-        onClick={resetGame}
-      >
-        Reset
-      </button>
+      </button> */}
 
-      <BackButton />
+      <div className="flex justify-center items-center h-14">
+        <div className="font-bold flex justify-center items-center bg-gray-300 p-2 rounded">
+          <Switch
+            initial={isRevealing}
+            disabled={gameStatus !== "playing"}
+            colorLeft="bg-yellow-500"
+            colorRight="bg-yellow-700"
+            onToggle={(val) =>
+              gameStatus === "playing" ? setIsRevealing(val) : null
+            }
+          />
+          <span className="ml-2 text-sm align-middle w-16">
+            {isRevealing ? "Hide" : "Reveal"}
+          </span>
+        </div>
+        <button
+          className="w-28 m-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-5 rounded cursor-pointer active:translate-y-1 transition-transform duration-150"
+          onClick={resetGame}
+        >
+          Reset
+        </button>
 
-      <div className="flex justify-center gap-4 mt-4">
+        <BackButton />
+      </div>
+      {/* <div className="flex justify-center gap-4 mt-4">
         <label className="flex items-center gap-2 text-sm text-gray-700">
           <input
             type="checkbox"
@@ -213,6 +230,21 @@ export default function Parachuteman() {
           />
           Show the first letter
         </label>
+      </div> */}
+      <div className="mt-4 font-bold flex justify-center items-center bg-gray-300 p-2 rounded w-68 mx-auto">
+        <Switch
+          initial={showFirstLetter}
+          colorLeft="bg-blue-400"
+          colorRight="bg-blue-600"
+          onToggle={(val) => {
+            const revealed = getRevealedLetters(word, val);
+            setShowFirstLetter(val);
+            setGuessed(revealed);
+          }}
+        />
+        <span className="ml-2 text-sm align-middle">
+          {showFirstLetter ? "Hide" : "Show"} the first letter
+        </span>
       </div>
 
       {showModal && (
