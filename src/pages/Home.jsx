@@ -3,7 +3,7 @@ import GradeCard from "../components/GradeCard";
 import GameCard from "../components/GameCard";
 import Parachuteman from "./Parachuteman";
 import games from "../data/games";
-import eigoParkBg from "../assets/eigo-park-bg2.png";
+import eigoParkBg from "../assets/eigo-park-bg2-min.png";
 
 export default function Home() {
   return (
